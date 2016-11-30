@@ -18,7 +18,8 @@ import javax.swing.JOptionPane;
  *
  * @author Armando
  */
-public class parte1 {
+public class parte1{ 
+    
     int CONTLOC,DIR_INIC,decimal,sumCONTLOC;
     String[] arregloEtiquetas =new String[contadorFilas()];
     
@@ -79,22 +80,22 @@ public class parte1 {
                         //Si son 3 tokens entonces ETIQUETA CODOP OPERANDO
                         if(st.countTokens()==3&&Character.isLetter(linea.charAt(0))){
                             
-                            etiqueta=st.nextToken();
+                            etiqueta=st.nextToken().toUpperCase();
                             
                             
-                            codop=st.nextToken();
+                            codop=st.nextToken().toUpperCase();
                             
                             
-                            operando=st.nextToken();
+                            operando=st.nextToken().toUpperCase();
                             
                             
                         //Si el primer caracter no es tab ni espacio y hay 2 tokens entonces ETIQUETA CODOP
                         }else if(linea.charAt(0)!=9&&linea.charAt(0)!=32&&st.countTokens()==2){
                             
-                            etiqueta=st.nextToken();
+                            etiqueta=st.nextToken().toUpperCase();
                            
                             
-                            codop=st.nextToken();
+                            codop=st.nextToken().toUpperCase();
                             
                             
                         //Si el primer caracter es espacio o tab entonces...
@@ -102,21 +103,20 @@ public class parte1 {
                             //Si hay 2 tokens entonces CODOP OPERANDO
                             if(st.countTokens()==2){
                                 
-                                codop=st.nextToken();
+                                codop=st.nextToken().toUpperCase();
                                 
-                                operando=st.nextToken();
+                                operando=st.nextToken().toUpperCase();
 
                                 
                             //Si hay 1 token entonces CODOP
                             }else if(st.countTokens()==1){
                                 
-                                codop=st.nextToken();
+                                codop=st.nextToken().toUpperCase();
                                 
                                 
                             }else if(st.countTokens()==3){
-                                codop=st.nextToken();
-                                
-                                operando=st.nextToken()+" "+st.nextToken();
+                                codop=st.nextToken().toUpperCase();
+                                operando=st.nextToken().toUpperCase()+" "+st.nextToken().toUpperCase();
                             }
                                 
                             
@@ -127,7 +127,7 @@ public class parte1 {
                         
                         //Si el codigo de operacion es "END" entonces termina el programa
                         if(comparar.equals(codop,"END")){
-                            bwTemp.write("CONTLOC\t\t"+ponerCeros(Integer.toHexString(CONTLOC),4)+"\t\t"+etiqueta+"\t\t"+codop+"\t\t"+operando);
+                            bwTemp.write("CONTLOC\t\t"+ponerCeros(Integer.toHexString(CONTLOC),4).toUpperCase()+"\t\t"+etiqueta+"\t\t"+codop+"\t\t"+operando);
                             break;
                         }
                         
@@ -155,7 +155,7 @@ public class parte1 {
                                validarunaEtiqueta(etiqueta,contador);
                                
                                 if(!comparar.equals(codop,"equ")){
-                                    bwTsim.write("CONT EtRe\t\t"+etiqueta+"\t\t"+ponerCeros(Integer.toHexString(decimal),4));
+                                    bwTsim.write("CONT EtRe\t\t"+etiqueta+"\t\t"+ponerCeros(Integer.toHexString(decimal),4).toUpperCase());
                                     bwTsim.newLine();
                                 }
                                 
@@ -172,7 +172,7 @@ public class parte1 {
                         if ((comparar.equals(codop,"db")||comparar.equals(codop,"dc.b")||comparar.equals(codop,"fcb"))&&decimal>=0&&decimal<=255&&operando!=null){
                             //Aumenta 1 a contloc e imprime info
                             
-                            bwTemp.write("CONTLOC\t\t"+ponerCeros(Integer.toHexString(CONTLOC),4)+"\t\t"+etiqueta+"\t\t"+codop+"\t\t"+operando);
+                            bwTemp.write("CONTLOC\t\t"+ponerCeros(Integer.toHexString(CONTLOC),4).toUpperCase()+"\t\t"+etiqueta+"\t\t"+codop+"\t\t"+operando);
                             bwTemp.newLine();
                             CONTLOC++;
                             
@@ -180,7 +180,7 @@ public class parte1 {
                         }else if((comparar.equals(codop,"dw")||comparar.equals(codop,"dc.w")||comparar.equals(codop,"fdb"))&&decimal>=0&&decimal<=65535&&operando!=null){
                             //Aumenta 2 a contloc e imprime info
                             
-                            bwTemp.write("CONTLOC\t\t"+ponerCeros(Integer.toHexString(CONTLOC),4)+"\t\t"+etiqueta+"\t\t"+codop+"\t\t"+operando);
+                            bwTemp.write("CONTLOC\t\t"+ponerCeros(Integer.toHexString(CONTLOC),4).toUpperCase()+"\t\t"+etiqueta+"\t\t"+codop+"\t\t"+operando);
                             bwTemp.newLine();
                             CONTLOC+=2;
                             
@@ -188,21 +188,21 @@ public class parte1 {
                         }else if(comparar.equals(codop,"fcc")&&operando!=null&&operando.charAt(0)=='"'&&operando.charAt(operando.length()-1)=='"'){
                             //aumenta el tamaño de la cadena
                             
-                            bwTemp.write("CONTLOC\t\t"+ponerCeros(Integer.toHexString(CONTLOC),4)+"\t\t"+etiqueta+"\t\t"+codop+"\t\t"+operando);
+                            bwTemp.write("CONTLOC\t\t"+ponerCeros(Integer.toHexString(CONTLOC),4).toUpperCase()+"\t\t"+etiqueta+"\t\t"+codop+"\t\t"+operando);
                             bwTemp.newLine();
                             CONTLOC+=(operando.length()-2);
                         //Si ds, ds.b o rmb y el operando es menor o igual a 16 bits entonces
                         }else if ((comparar.equals(codop,"ds")||comparar.equals(codop,"ds.b")||comparar.equals(codop,"rmb"))&&decimal>=0&&decimal<=65535&&operando!=null){
                             //Aumenta a contloc el valor del operando por uno
                             
-                            bwTemp.write("CONTLOC\t\t"+ponerCeros(Integer.toHexString(CONTLOC),4)+"\t\t"+etiqueta+"\t\t"+codop+"\t\t"+operando);
+                            bwTemp.write("CONTLOC\t\t"+ponerCeros(Integer.toHexString(CONTLOC),4).toUpperCase()+"\t\t"+etiqueta+"\t\t"+codop+"\t\t"+operando);
                             bwTemp.newLine();
                             CONTLOC+=decimal;
                         //Si ds.w o rmw y el operando es menor o igual a 16 bits entonces
                         }else if((comparar.equals(codop,"ds.w")||comparar.equals(codop,"rmw"))&&decimal>=0&&decimal<=65535&&operando!=null){
                             //Aumenta a contloc el valor del operando por 2
                             
-                            bwTemp.write("CONTLOC\t\t"+ponerCeros(Integer.toHexString(CONTLOC),4)+"\t\t"+etiqueta+"\t\t"+codop+"\t\t"+operando);
+                            bwTemp.write("CONTLOC\t\t"+ponerCeros(Integer.toHexString(CONTLOC),4).toUpperCase()+"\t\t"+etiqueta+"\t\t"+codop+"\t\t"+operando);
                             bwTemp.newLine();
                             CONTLOC+=(decimal*2);
                         //Si no es directiva entonces
@@ -222,7 +222,7 @@ public class parte1 {
                                 error=true;
                                 break;
                             }else{
-                                bwTemp.write("CONTLOC\t\t"+ponerCeros(Integer.toHexString(CONTLOC),4)+"\t\t"+etiqueta+"\t\t"+codop+"\t\t"+operando);
+                                bwTemp.write("CONTLOC\t\t"+ponerCeros(Integer.toHexString(CONTLOC),4).toUpperCase()+"\t\t"+etiqueta+"\t\t"+codop+"\t\t"+operando);
                                 bwTemp.newLine();
                                 CONTLOC+=sumCONTLOC;
                             }
@@ -238,9 +238,9 @@ public class parte1 {
                         //Si es equ entonces
                         }else if(comparar.equals(codop,"equ")){
                             //Imprime en temp y en tsim
-                            bwTemp.write("V EQU\t\t"+ponerCeros(Integer.toHexString(decimal),4)+"\t\t"+etiqueta+"\t\t"+codop+"\t\t"+operando);
+                            bwTemp.write("V EQU\t\t"+ponerCeros(Integer.toHexString(decimal),4).toUpperCase()+"\t\t"+etiqueta+"\t\t"+codop+"\t\t"+operando);
                             bwTemp.newLine();
-                            bwTsim.write("EQU EtAb\t\t"+etiqueta+"\t\t"+ponerCeros(Integer.toHexString(decimal),4));
+                            bwTsim.write("EQU EtAb\t\t"+etiqueta+"\t\t"+ponerCeros(Integer.toHexString(decimal),4).toUpperCase());
                             bwTsim.newLine();
                             
                         //Si es org y no hay otro
@@ -248,14 +248,14 @@ public class parte1 {
                             //Marca inicio dirinc e imprime informacion en temp
                             DIR_INIC=decimal;
                             CONTLOC=DIR_INIC;
-                            bwTemp.write("DIR_INIC\t\t"+ponerCeros(Integer.toHexString(decimal),4)+"\t\t"+etiqueta+"\t\t"+codop+"\t\t"+operando);
+                            bwTemp.write("DIR_INIC\t\t"+ponerCeros(Integer.toHexString(decimal),4).toUpperCase()+"\t\t"+etiqueta+"\t\t"+codop+"\t\t"+operando);
                             bwTemp.newLine();
                             org=true;
                             
                         //Si es nop entonces
                         }else if(comparar.equals(codop,"nop")){
                             //imprime info en temp
-                            bwTemp.write("CONTLOC\t\t"+ponerCeros(Integer.toHexString(CONTLOC),4)+"\t\t"+etiqueta+"\t\t"+codop+"\t\t"+operando);
+                            bwTemp.write("CONTLOC\t\t"+ponerCeros(Integer.toHexString(CONTLOC),4).toUpperCase()+"\t\t"+etiqueta+"\t\t"+codop+"\t\t"+operando);
                             bwTemp.newLine();
                         }else{
                             JOptionPane.showMessageDialog(null,"Error: linea "+(contador) );
@@ -282,8 +282,7 @@ public class parte1 {
                 brAsm.close();
                 bwTemp.close();
                 bwTsim.close();
-                
-                //Si no hay error entonces continua la segunda parte
+           
                 if(!error){
                     parte2 p2=new parte2();
                     p2.calculoCodMaquina();
@@ -613,4 +612,6 @@ public class parte1 {
         }
         return hex16;
     }
+
+    
 }

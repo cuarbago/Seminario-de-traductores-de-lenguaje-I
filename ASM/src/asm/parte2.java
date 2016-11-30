@@ -120,19 +120,19 @@ public class parte2 {
                                 
                                 //Diferenciar entre indexados de 5 bits, post/pre incremento/decremento y de acumulador
                                 //5 bits
-                                if(decimal>=-16&&decimal<=15&&operando!=null&&operando.toUpperCase().matches("^[0-9-]+,+(X|Y|SP|PC)+$")) {
+                                if(decimal>=-16&&decimal<=15&&operando!=null&&operando.matches("^[0-9-]+,+(X|Y|SP|PC)+$")) {
                                     //binario es el valorDeRegistro+0+elDecimalEnBinario5bits
                                     binario=determinarRegistro(operando)+"0"+acomodarBits(binario,5);
                                 //5 bits
-                                }else if(decimal>=-16&&decimal<=15&&operando!=null&&operando.toUpperCase().matches("^,+(X|Y|SP|PC)+$")) {
+                                }else if(decimal>=-16&&decimal<=15&&operando!=null&&operando.matches("^,+(X|Y|SP|PC)+$")) {
                                     //binario es el valorDeRegistro+0+elDecimalEnBinario5bits
                                     binario=determinarRegistro(operando)+"0"+acomodarBits(binario,5);
                                 //post/pre incremento/decremento
-                                }else if(decimal >= -1&&decimal<=8&&operando!=null&&operando.toUpperCase().matches("^[0-9-]+,[//+|-]?+(X|Y|SP|PC)+[//+|-]?+$")) {
+                                }else if(decimal >= -1&&decimal<=8&&operando!=null&&operando.matches("^[0-9-]+,[//+|-]?+(X|Y|SP|PC)+[//+|-]?+$")) {
                                     //binario es el valorDeRegistro+1+banderaPost/Pre+elDecimalEnBinario5bits
                                     binario=determinarRegistro(operando)+"1"+p+acomodarBits(binario, 4);
                                 //de acumulador
-                                }else if (operando != null && (operando.toUpperCase().contains("A") || operando.toUpperCase().contains("B") || operando.toUpperCase().contains("D"))) {
+                                }else if (operando != null && (operando.contains("A") || operando.contains("B") || operando.contains("D"))) {
                                     //binario es el valorDeRegistro+1+valorDeAcumulador
                                     binario="111"+determinarRegistro(operando)+"1"+determinarAcumulador(operando);
                                 }
@@ -255,16 +255,16 @@ public class parte2 {
     String determinarRegistro(String operando) {
         String binario = null;
         //X vale 00
-        if (operando.toUpperCase().contains("X")) {
+        if (operando.contains("X")) {
             binario = "00";
         //Y vale 01
-        } else if (operando.toUpperCase().contains("Y")) {
+        } else if (operando.contains("Y")) {
             binario = "01";
         //SP vale 10
-        } else if (operando.toUpperCase().contains("SP")) {
+        } else if (operando.contains("SP")) {
             binario = "10";
         //PC vale 11
-        } else if (operando.toUpperCase().contains("PC")) {
+        } else if (operando.contains("PC")) {
             binario = "11";
         }
         return binario;
@@ -275,13 +275,13 @@ public class parte2 {
     String determinarAcumulador(String operando) {
         String binario = null;
         //A vale 00
-        if (operando.toUpperCase().contains("A")) {
+        if (operando.contains("A")) {
             binario = "00";
         //B vale 01
-        } else if (operando.toUpperCase().contains("B")) {
+        } else if (operando.contains("B")) {
             binario = "01";
         //D vale 10
-        } else if (operando.toUpperCase().contains("D")) {
+        } else if (operando.contains("D")) {
             binario = "10";
         }
         return binario;
@@ -331,14 +331,14 @@ public class parte2 {
                 }
             
         //Si comienza con coma
-        }else if(operando.toUpperCase().matches("^,+(X|Y|SP|PC)+$")){
+        }else if(operando.matches("^,+(X|Y|SP|PC)+$")){
             //Indexado de 5 bits
             System.out.println("Indexado de 5 bits");
             modoDireccionamiento="IDX";
             //en este caso se sobreentiende que el decimal es 0
             decimal=0;
         //Si comienza con digito y contiene ','
-        }else if(operando.toUpperCase().matches("^[0-9-]+,[//+|-]?+(X|Y|SP|PC)+[//+|-]?+$")){
+        }else if(operando.matches("^[0-9-]+,[//+|-]?+(X|Y|SP|PC)+[//+|-]?+$")){
             //Si contiene ',+' y el decimal esta entre 1 y 8
             if(operando.contains(",+")&decimal>=1&decimal<=8){
                 //indexado pre incremento
@@ -425,9 +425,9 @@ public class parte2 {
                 
             
         //Si comienza y termina con corchetes
-        }else if(operando.toUpperCase().matches("^\\x{5B}+([0-9-]|A|B|D)+,+(X|Y|SP|PC)+\\x{5D}+$")){
+        }else if(operando.matches("^\\x{5B}+([0-9-]|A|B|D)+,+(X|Y|SP|PC)+\\x{5D}+$")){
             //si tiene A a B b D d 
-            if(operando.toUpperCase().contains("A") || operando.toUpperCase().contains("B") || operando.toUpperCase().contains("D")){
+            if(operando.contains("A") || operando.contains("B") || operando.contains("D")){
                 //Indexado acumulador indirecto
                 System.out.println("Indexado indirecto de acumulador "+operando.charAt(1)+" ");
                 modoDireccionamiento="[D,IDX]";
@@ -441,7 +441,7 @@ public class parte2 {
                 
             
         //Si incia con A a B b D d 
-        }else if(operando.toUpperCase().matches("^(A|B|D)+,+(X|Y|SP|PC)+$")){
+        }else if(operando.matches("^(A|B|D)+,+(X|Y|SP|PC)+$")){
             //Indexado de acumulador
             System.out.println("Indexado de acumulador");
             modoDireccionamiento="IDX";
@@ -519,12 +519,13 @@ public class parte2 {
             decimal=Integer.parseInt(operando.replaceAll("[^0-1]",""),2);
         }else if(operando.matches("^#+[0-9-]+$")||operando.matches("^[0-9-]+$")){
             decimal=Integer.parseInt(operando.replaceAll("[^0-9-]",""),10);
-        }else if (operando.toUpperCase().matches("^[0-9-]+,[//+|-]?+(X|Y|SP|PC)+[//+|-]?+$")) {
+        }else if (operando.matches("^[0-9-]+,[//+|-]?+(X|Y|SP|PC)+[//+|-]?+$")) {
             decimal=Integer.parseInt(operando.replaceAll("[-]+[^0-9]|([-]+$)","").replaceAll("[^0-9-]",""),10);
-        } else if (operando.toUpperCase().matches("^[\\x{5B}]+([0-9-])+,+(X|Y|SP|PC)+[\\x{5D}]+$")) {
+        } else if (operando.matches("^[\\x{5B}]+([0-9-])+,+(X|Y|SP|PC)+[\\x{5D}]+$")) {
             decimal=Integer.parseInt(operando.replaceAll("[^0-9-]",""),10);
         }
 
         
     }
+    
 }
